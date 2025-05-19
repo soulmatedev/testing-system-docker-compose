@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  postgres:
+    build: ./postgres
+    container_name: testing-system-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 000123000
+      POSTGRES_DB: testing-system-db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: /Users/a./GolandProjects/testing-system-api
+      dockerfile: Dockerfile
+    container_name: testing-system-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: 000123000
+      DB_NAME: testing-system-db
+    ports:
+      - "25504:25504"
+
+volumes:
+  postgres_data:
