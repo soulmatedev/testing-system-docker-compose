@@ -2,8 +2,9 @@ version: "3.8"
 
 services:
   postgres:
-    image: soulmate1/testing-system-db:latest
     container_name: testing-system-db
+    platform: linux/amd64
+    image: soulmate1/testing-system-db:latest
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "000123000"
@@ -21,6 +22,7 @@ services:
   backend:
     container_name: testing-system-api
     restart: always
+    platform: linux/amd64
     image: soulmate1/testing-system-api:latest
     depends_on:
       postgres:
@@ -37,6 +39,7 @@ services:
   frontend:
     container_name: testing-system-web
     restart: always
+    platform: linux/amd64
     image: soulmate1/testing-system-web:latest
     ports:
       - "3000:80"
