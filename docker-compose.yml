@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   postgres:
-    build: ./postgres
+    image: soulmate1/testing-system-db:latest
     container_name: testing-system-db
     environment:
       POSTGRES_USER: postgres
@@ -19,10 +19,9 @@ services:
       retries: 5
 
   backend:
-    build:
-      context: /Users/a./GolandProjects/testing-system-api
-      dockerfile: Dockerfile
     container_name: testing-system-api
+    restart: always
+    image: soulmate1/testing-system-api:latest
     depends_on:
       postgres:
         condition: service_healthy
@@ -36,12 +35,11 @@ services:
       - "25504:25504"
 
   frontend:
-    build:
-      context: /Users/a./WebstormProjects/testing-system-web
-      dockerfile: Dockerfile
     container_name: testing-system-web
+    restart: always
+    image: soulmate1/testing-system-web:latest
     ports:
-      - "3000:3000"
+      - "3000:80"
     depends_on:
       - backend
 
