@@ -1,0 +1,9 @@
+service-to.ru, www.service-to.ru {
+    handle /api* {
+        reverse_proxy backend:25504
+    }
+
+    handle {
+        reverse_proxy frontend:80
+    }
+}
