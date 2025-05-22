@@ -34,7 +34,7 @@ services:
       DB_PASSWORD: "000123000"
       DB_NAME: testing-system-db
     ports:
-      - "25504:25504"
+      - "25504:25501"
 
   frontend:
     container_name: testing-system-web
@@ -42,19 +42,9 @@ services:
     platform: linux/amd64
     image: soulmate1/testing-system-web:latest
     ports:
-      - "3000:80"
+      - "3000:81"
     depends_on:
       - backend
-
-  caddy:
-    image: caddy:2.9-alpine
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./caddy/Caddyfile:/etc/caddy/Caddyfile
-      - ./caddy_data:/data
-      - ./caddy_config:/config
 
 volumes:
   postgres_data:
