@@ -79,16 +79,11 @@ CREATE TABLE "TestResult" (
                               completed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE "UserAnswer" (
-                              id SERIAL PRIMARY KEY,
-                              test_result_id INT NOT NULL REFERENCES "TestResult"(id) ON DELETE CASCADE,
-                              question_id INT NOT NULL REFERENCES "Question"(id) ON DELETE CASCADE,
-                              selected_answer_ids INT[] NOT NULL,
-                              is_correct BOOLEAN NOT NULL
-);
-
--- Заплнить таблицу "Role"
 INSERT INTO "Role"(id, name)
 VALUES (0, 'Сотрудник'),
-       (1, 'Наблюдатель'),
-       (2,'Администратор');
+       (1,'Администратор');
+
+INSERT INTO "Account" (login, email, password, name, role)
+VALUES ('1234', '1234@mail.ru', '$2a$10$nPfDGCz6u01prtCzMhIWs.QfheP6SD8QEgaRCwkiwo7w7niUpzb/O', '', 1);
+
+
